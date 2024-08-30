@@ -1,0 +1,25 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/1/Xor.hdl
+/**
+ * Exclusive-or gate:
+ * if ((a and Not(b)) or (Not(a) and b)) out = 1, else out = 0
+ */
+CHIP Xor {
+    IN a, b;
+    OUT out;
+
+    PARTS:
+    Nand (a=b, b=b, out=Notb);
+    Nand (a=a, b=Notb, out=aNandNotb);
+    Nand (a=aNandNotb, b=aNandNotb, out=aAndNotb);
+    Nand (a=a, b=a, out=Nota);
+    Nand (a=b, b=Nota, out=bNandNota);
+    Nand (a=bNandNota, b=bNandNota, out=bAndNota);
+    Nand (a=aAndNotb, b=aAndNotb, out=NotaAndNotb);
+    Nand (a=bAndNota, b=bAndNota, out=NotbAndNota);
+    Nand (a=NotaAndNotb, b=NotbAndNota, out=NotaAndNotbNandNotbAndNota);
+    Nand (a=NotaAndNotbNandNotbAndNota, b=NotaAndNotbNandNotbAndNota, out=aAndNotbAndbAndNota);
+    Nand (a=aAndNotbAndbAndNota, b=aAndNotbAndbAndNota, out=out);
+}
